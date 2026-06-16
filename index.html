@@ -1,0 +1,238 @@
+<!-- =ファイルへんか= =ファイル変化= /index.html -->
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>食レポ同好会 公式サイト</title>
+  <meta name="description" content="N中等部 食レポ同好会 公式サイト" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <!-- Login -->
+  <section id="loginView" class="login-screen">
+    <form id="loginForm" class="login-card">
+      <p class="mono login-kicker">SHOKUREPO CLUB / MEMBERS ONLY</p>
+      <h1>食レポ同好会</h1>
+      <p class="login-copy">料理写真と食レポを投稿して、バッジを集めよう。</p>
+
+      <label class="field">
+        <span>ユーザー名</span>
+        <input id="usernameInput" type="text" autocomplete="username" placeholder="eitoku" required />
+      </label>
+
+      <label class="field">
+        <span>パスワード</span>
+        <input id="passwordInput" type="password" autocomplete="current-password" required />
+      </label>
+
+      <button id="loginButton" class="primary-button" type="submit">ログイン</button>
+      <p id="loginMessage" class="inline-message"></p>
+      <p id="configWarning" class="inline-message warning hidden"></p>
+    </form>
+  </section>
+
+  <!-- App -->
+  <div id="appShell" class="app-shell hidden">
+    <header class="site-header">
+      <div class="header-inner">
+        <button class="brand nav-logo" data-view="home" type="button">
+          <span class="brand-main">食レポ同好会</span>
+          <span class="mono brand-sub">OFFICIAL LIVE</span>
+        </button>
+
+        <nav class="nav" aria-label="メインメニュー">
+          <button class="nav-btn is-active" data-view="home" type="button">TOP</button>
+          <button class="nav-btn" data-view="post" type="button">POST</button>
+          <button class="nav-btn" data-view="ranking" type="button">RANKING</button>
+          <button class="nav-btn" data-view="profile" type="button">PROFILE</button>
+          <button class="nav-btn" data-view="hall" type="button">HALL</button>
+        </nav>
+
+        <div class="session-box">
+          <span id="sessionName" class="session-name">...</span>
+          <button id="logoutButton" class="ghost-button small" type="button">LOG OUT</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Home -->
+      <section id="homeView" class="view is-active">
+        <div class="hero-panel">
+          <p class="mono section-kicker">LIVE FOOD REPORT</p>
+          <h2>最近の投稿</h2>
+          <p>飯テロではなく、食レポで勝つ。賑わい・返信・参加しやすさ重視。</p>
+          <p id="homeWeekLabel" class="week-label"></p>
+        </div>
+
+        <div class="banner-grid">
+          <button id="goRanking" class="feature-banner purple" type="button">
+            <span class="mono">WEEKLY RANKING</span>
+            <strong>今週のランキング</strong>
+          </button>
+          <button id="goHall" class="feature-banner gold" type="button">
+            <span class="mono">HALL OF FAME</span>
+            <strong>殿堂入り</strong>
+          </button>
+        </div>
+
+        <form id="genreForm" class="filter-bar">
+          <select id="genreSelect" aria-label="ジャンル選択"></select>
+          <input id="genreSearchInput" list="genreDatalist" type="search" placeholder="ジャンル名で検索 例: 焼肉" />
+          <datalist id="genreDatalist"></datalist>
+          <button class="ghost-button" type="submit">検索</button>
+          <button id="clearGenreButton" class="ghost-button" type="button">解除</button>
+        </form>
+
+        <p id="homeStatus" class="status-line"></p>
+        <div id="postGrid" class="post-grid"></div>
+      </section>
+
+      <!-- Post -->
+      <section id="postView" class="view">
+        <div class="neon-panel form-panel">
+          <p class="mono section-kicker">NEW REPORT</p>
+          <h2>投稿フォーム</h2>
+          <p>画像は自動で長辺1280px程度に圧縮してからアップロードします。</p>
+
+          <form id="postForm" class="stack-form">
+            <label class="field">
+              <span>料理写真（必須）</span>
+              <input id="postImageInput" type="file" accept="image/*" required />
+            </label>
+
+            <label class="field">
+              <span>ジャンル（必須）</span>
+              <select id="postGenreSelect" required></select>
+            </label>
+
+            <label class="field">
+              <span>食レポ本文（必須）</span>
+              <textarea id="postCommentInput" rows="7" maxlength="1200" placeholder="香り、食感、温度、感動ポイントを書こう。" required></textarea>
+            </label>
+
+            <button id="postSubmitButton" class="primary-button" type="submit">投稿する</button>
+            <p id="postFormMessage" class="inline-message"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- Ranking -->
+      <section id="rankingView" class="view">
+        <div class="hero-panel compact">
+          <p class="mono section-kicker">RESULT / WEEKLY</p>
+          <h2>今週のランキング</h2>
+          <p id="rankingWeekLabel" class="week-label"></p>
+          <p id="rankingSummary" class="status-line"></p>
+        </div>
+        <div id="rankingGrid" class="post-grid ranking-grid"></div>
+      </section>
+
+      <!-- Profile -->
+      <section id="profileView" class="view">
+        <div id="profileHeader" class="profile-header"></div>
+        <div id="profileStats" class="profile-stats"></div>
+
+        <div class="neon-panel">
+          <div class="panel-title-row">
+            <div>
+              <p class="mono section-kicker">ACHIEVEMENTS</p>
+              <h2>獲得バッジ</h2>
+            </div>
+            <p class="small-note">クリックでフルアニメーション版</p>
+          </div>
+          <div id="profileBadges" class="badge-strip"></div>
+        </div>
+
+        <div class="neon-panel">
+          <p class="mono section-kicker">MY POSTS</p>
+          <h2>自分の投稿</h2>
+          <div id="profilePosts" class="post-grid"></div>
+        </div>
+      </section>
+
+      <!-- Hall -->
+      <section id="hallView" class="view">
+        <div class="hero-panel compact">
+          <p class="mono section-kicker">HALL OF FAME</p>
+          <h2>殿堂入り</h2>
+          <p>歴代の週間優勝者とレジェンド皆勤賞達成者。</p>
+        </div>
+
+        <div class="hall-grid">
+          <section class="neon-panel">
+            <p class="mono section-kicker">REPORTER KINGS</p>
+            <h2>歴代 現地特派員</h2>
+            <div id="reporterHall" class="hall-list"></div>
+          </section>
+
+          <section class="neon-panel">
+            <p class="mono section-kicker">LEGEND STREAK</p>
+            <h2>14日連続 レジェンド皆勤賞</h2>
+            <div id="legendHall" class="hall-list"></div>
+          </section>
+
+          <section class="neon-panel">
+            <p class="mono section-kicker">COMMENT KINGS</p>
+            <h2>歴代 コメント王</h2>
+            <div id="commentKingHall" class="hall-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Post Modal -->
+  <div id="postModal" class="modal hidden" aria-hidden="true">
+    <div id="postModalBackdrop" class="modal__backdrop"></div>
+    <article class="modal__panel post-modal-panel" role="dialog" aria-modal="true" aria-label="投稿詳細">
+      <button id="modalClose" class="modal__close" type="button" aria-label="閉じる">×</button>
+
+      <div class="post-detail-grid">
+        <div>
+          <img id="modalImage" class="detail-image" alt="" />
+        </div>
+
+        <div class="detail-body">
+          <p id="modalGenre" class="genre-pill"></p>
+          <h2 id="modalAuthor"></h2>
+          <p id="modalDate" class="small-note"></p>
+          <p id="modalText" class="detail-comment"></p>
+
+          <div class="vote-box">
+            <button id="voteButton" class="primary-button" type="button">これに投票</button>
+            <span id="modalVoteCount" class="vote-count"></span>
+          </div>
+
+          <section class="comments-section">
+            <h3>コメント</h3>
+            <div id="commentsList" class="comments-list"></div>
+
+            <form id="commentForm" class="comment-form">
+              <textarea id="commentInput" rows="3" maxlength="500" placeholder="コメントを書く"></textarea>
+              <button id="commentSubmitButton" class="ghost-button" type="submit">送信</button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- Badge Modal -->
+  <div id="badgeModal" class="modal hidden" aria-hidden="true">
+    <div id="badgeModalBackdrop" class="modal__backdrop"></div>
+    <article class="modal__panel badge-modal-panel" role="dialog" aria-modal="true" aria-label="バッジ詳細">
+      <button id="badgeModalClose" class="modal__close" type="button" aria-label="閉じる">×</button>
+      <img id="badgeModalImage" class="badge-full-image" alt="" />
+      <h2 id="badgeModalTitle"></h2>
+      <p id="badgeModalCaption" class="small-note"></p>
+    </article>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
