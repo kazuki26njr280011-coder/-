@@ -6,8 +6,8 @@
  * anon public key / publishable key はブラウザに公開してOKな鍵です。
  * service_role key は絶対に書かないでください。
  */
-const SUPABASE_URL = 'https://あなたのプロジェクトID.supabase.co';
-const SUPABASE_ANON_KEY = 'あなたのpublishable-key（anon public key）';
+const SUPABASE_URL = 'https://prfvftdqlzlilljhmlhf.supabase.co/rest/v1/;
+const SUPABASE_ANON_KEY = 'sb_publishable_Gal-XIn205z_UlUU8iyyFw_2DGI08Vt';
 
 const LOGIN_DOMAIN = '@shokurepo.local';
 const STORAGE_BUCKET = 'post-images';
